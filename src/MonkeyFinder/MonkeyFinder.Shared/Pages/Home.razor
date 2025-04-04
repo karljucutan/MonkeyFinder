@@ -1,6 +1,9 @@
 ﻿@page "/"
+@using MonkeyFinder.Shared.Models
 @using MonkeyFinder.Shared.Services
+@using MonkeyFinder.Shared.Services.Abstractions
 @inject IFormFactor FormFactor
+@inject IMonkeyService MonkeyService
 
 <PageTitle>Home</PageTitle>
 
@@ -8,7 +11,37 @@
 
 Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
 
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var monkey in monkeys)
+            {
+                <tr>
+                    <td>
+                        <img src="@monkey.Image" alt="@monkey.Name" style="width: 100px; height:100px;" />
+                    </td>
+                    <td>@monkey.Name</td>
+                    <td>@monkey.Location</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 @code {
     private string factor => FormFactor.GetFormFactor();
     private string platform => FormFactor.GetPlatform();
+
+    private List<Monkey> monkeys = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        monkeys = await MonkeyService.GetMonkeysAsync();
+    }
 }

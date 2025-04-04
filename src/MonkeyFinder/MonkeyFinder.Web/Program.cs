@@ -1,3 +1,4 @@
+using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Web.Components;
 using MonkeyFinder.Web.Services;
@@ -11,6 +12,9 @@ builder.Services.AddRazorComponents()
 
 // Add device-specific services used by the MonkeyFinder.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
+
+// Add server-side services implementation while WASM is not yet available.
+builder.Services.AddSharedServices();
 
 var app = builder.Build();
 
