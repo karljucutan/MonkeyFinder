@@ -1,7 +1,9 @@
 ﻿@page "/"
+@using MonkeyFinder.Shared.Components
 @using MonkeyFinder.Shared.Models
 @using MonkeyFinder.Shared.Services
 @using MonkeyFinder.Shared.Services.Abstractions
+@using System.Text.Json
 @inject IFormFactor FormFactor
 @inject IMonkeyService MonkeyService
 
@@ -11,27 +13,27 @@
 
 Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
 
+<h3>Render Info</h3>
+<ul>
+    <li>Name: @RendererInfo.Name</li>
+    <li>Is Interactive: @RendererInfo.IsInteractive</li>
+    <li>Assigned Render Mode: @AssignedRenderMode</li>
+</ul>
+
 <div>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var monkey in monkeys)
-            {
-                <tr>
-                    <td>
-                        <img src="@monkey.Image" alt="@monkey.Name" style="width: 100px; height:100px;" />
-                    </td>
-                    <td>@monkey.Name</td>
-                    <td>@monkey.Location</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @if (string.Equals(RendererInfo.Name, "WebView", StringComparison.OrdinalIgnoreCase))
+    {
+        <Component Monkeys="monkeys"></Component>
+    }
+    else
+    {
+        @* This <PersistentState> component is used to cache and persist the Monkey list state across Blazor prerendering and interactive phases.
+            It prevents redundant API/data calls by storing the result from the initial server prerender so that
+            on render mode switch it will try to get the data on PersistentComponentState if exists. *@
+        <PersistentState GetState="LoadDataAsync" StateKey="MonkeyListData" Context="context">
+            <Component Monkeys="context"></Component>
+        </PersistentState>
+    }
 </div>
 
 @code {
@@ -42,6 +44,13 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
 
     protected override async Task OnInitializedAsync()
     {
+        if (string.Equals(RendererInfo.Name, "WebView", StringComparison.OrdinalIgnoreCase))
+            monkeys = await LoadDataAsync();
+    }
+
+    private async Task<List<Monkey>> LoadDataAsync()
+    {
         monkeys = await MonkeyService.GetMonkeysAsync();
+        return monkeys;
     }
 }

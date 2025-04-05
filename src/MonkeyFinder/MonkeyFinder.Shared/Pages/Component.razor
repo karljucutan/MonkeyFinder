@@ -1,0 +1,29 @@
+@using MonkeyFinder.Shared.Models
+@using MonkeyFinder.Shared.Services
+@using MonkeyFinder.Shared.Services.Abstractions
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var monkey in Monkeys)
+        {
+            <tr>
+                <td>
+                    <img src="@monkey.Image" alt="@monkey.Name" style="width: 100px; height:100px;" />
+                </td>
+                <td>@monkey.Name</td>
+                <td>@monkey.Location</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<Monkey> Monkeys { get; set; } = [];
+}
