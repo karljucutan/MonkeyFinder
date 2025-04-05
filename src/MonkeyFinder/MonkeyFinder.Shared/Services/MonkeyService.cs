@@ -17,10 +17,10 @@ public class MonkeyService : IMonkeyService
         if (_monkeysList.Count > 0)
             return _monkeysList;
 
-        var response = await _httpClient.GetAsync("https://montemagno.com/monkeys.json");
+        HttpResponseMessage response = await _httpClient.GetAsync("https://montemagno.com/monkeys.json");
         if (response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadFromJsonAsync(MonkeyContext.Default.ListMonkey);
+            List<Monkey>? result = await response.Content.ReadFromJsonAsync(MonkeyContext.Default.ListMonkey);
 
             if (result is not null)
                 _monkeysList = result;

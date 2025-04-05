@@ -1,12 +1,14 @@
-﻿namespace MonkeyFinder.Web.ApiEndpoints;
+﻿using MonkeyFinder.Shared.Services.Abstractions;
+
+namespace MonkeyFinder.Web.ApiEndpoints;
 
 public static class MonkeysEndpoints
 {
     public static void MapMonkeysEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/monkeys");
+        RouteGroupBuilder group = routes.MapGroup("/api/monkeys");
 
-        group.MapGet("/", () => Results.Ok("Retrieve all monkeys"))
+        group.MapGet("/", async (IMonkeyService monkeyService) => await monkeyService.GetMonkeysAsync())
             .WithName("GetAllMonkeys")
             .WithOpenApi();
     }

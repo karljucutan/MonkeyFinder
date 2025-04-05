@@ -24,8 +24,9 @@ public class Monkey
 /// Use this context when calling JsonSerializer methods:
 /// e.g., JsonSerializer.Serialize(value, MonkeyContext.Default.Monkey); 
 /// </summary>
+/// 
 [JsonSerializable(typeof(List<Monkey>))]
 [JsonSerializable(typeof(Monkey))]
-internal sealed partial class MonkeyContext : JsonSerializerContext
+public sealed partial class MonkeyContext : JsonSerializerContext
 {
 }
