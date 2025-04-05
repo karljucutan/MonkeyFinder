@@ -1,9 +1,13 @@
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
+using MonkeyFinder.Web.ApiEndpoints;
 using MonkeyFinder.Web.Components;
 using MonkeyFinder.Web.Services;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOpenApi();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -17,6 +21,13 @@ builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSharedServices();
 
 var app = builder.Build();
+
+// Open API documentation and Scalar API references
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -41,5 +52,7 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(
         typeof(MonkeyFinder.Shared._Imports).Assembly,
         typeof(MonkeyFinder.Web.Client._Imports).Assembly);
+
+app.MapMonkeysEndpoints();
 
 app.Run();
