@@ -25,6 +25,7 @@ public class Monkey
 /// e.g., JsonSerializer.Serialize(value, MonkeyContext.Default.Monkey); 
 /// </summary>
 /// 
+[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
 [JsonSerializable(typeof(List<Monkey>))]
 [JsonSerializable(typeof(Monkey))]
 public sealed partial class MonkeyContext : JsonSerializerContext

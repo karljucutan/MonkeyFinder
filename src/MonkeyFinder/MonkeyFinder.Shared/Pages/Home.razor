@@ -4,6 +4,7 @@
 @using MonkeyFinder.Shared.Services
 @using MonkeyFinder.Shared.Services.Abstractions
 @using System.Text.Json
+@using MonkeyFinder.Shared.Extensions
 @inject IFormFactor FormFactor
 @inject IMonkeyService MonkeyService
 
@@ -21,7 +22,7 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
 </ul>
 
 <div>
-    @if (string.Equals(RendererInfo.Name, "WebView", StringComparison.OrdinalIgnoreCase))
+    @if (RendererInfo.IsWebViewRendering())
     {
         <Component Monkeys="Monkeys"></Component>
     }
@@ -31,6 +32,7 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
             It prevents redundant API/data calls by storing the result from the initial server prerender so that
             on render mode switch it will try to get the data on PersistentComponentState if exists. *@
         <PersistentState GetState="LoadDataAsync" StateKey="MonkeyListData" Context="context">
+            <Component Monkeys="context"></Component>
             <Component Monkeys="context"></Component>
         </PersistentState>
     }
@@ -47,9 +49,7 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
         // You will notice that OnInitializedAsync will be called twice pre-rendering and interactive phase. But, OnInitAsyncCounter will reset.
         // This is because the Blazor WebAssembly app is prerendered on the server and then rehydrated on the client.
         // If there is an api call here, it will call twice. But, with PersistentState component, it will try to get the data from the cache if exists else it will execute the GetState(Func).
-        OnInitAsyncCounter++;
-
-        if (string.Equals(RendererInfo.Name, "WebView", StringComparison.OrdinalIgnoreCase))
+       if (RendererInfo.IsWebViewRendering())
             Monkeys = await LoadDataAsync();
     }
 
