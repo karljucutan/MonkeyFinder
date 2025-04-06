@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using MonkeyFinder.Shared.Components
+@using MonkeyFinder.Shared.Components.Generics
 @using MonkeyFinder.Shared.Models
 @using MonkeyFinder.Shared.Services
 @using MonkeyFinder.Shared.Services.Abstractions
@@ -31,8 +32,8 @@ else
     @* This <PersistentState> component is used to cache and persist the Monkey list state across Blazor prerendering and interactive phases.
         It prevents redundant API/data calls by storing the result from the initial server prerender so that
         on render mode switch it will try to get the data on PersistentComponentState if exists. *@
-    <PersistentStateComponent GetState="LoadDataAsync" StateKey="MonkeyListData" Context="context">
-        <MonkeysComponent Monkeys="context"></MonkeysComponent>
+    <PersistentStateComponent GetState="LoadDataAsync" StateKey="MonkeyListData" Context="monkeysState">
+        <MonkeysComponent Monkeys="monkeysState"></MonkeysComponent>
     </PersistentStateComponent>
 }
 

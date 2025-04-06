@@ -28,4 +28,11 @@ public class MonkeyService : IMonkeyService
 
         return _monkeysList;
     }
+
+    public async Task<Monkey> AddMonkeyAsync(Monkey monkey)
+    {
+        _monkeysList.Add(monkey);
+
+        return monkey;
+    }
 }

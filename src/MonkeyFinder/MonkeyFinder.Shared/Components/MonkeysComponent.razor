@@ -10,18 +10,20 @@
     </FluentButton>
     <p>Name: @DialogData.Name - Population: @DialogData.Population </p>
 
-    <ul class="list-group">
+    <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
         @foreach (var monkey in Monkeys)
         {
-            <li class="card">
-                <img class="card-img" src="@monkey.Image" alt="@monkey.Name" style="width: 100px; height:100px;" />
-                <div class="card-body">
-                    <strong>@monkey.Name</strong>
-                    <p>@monkey.Location</p>
-                </div>
-            </li>
+            <FluentCard>
+                <FluentStack VerticalAlignment="VerticalAlignment.Center">
+                    <img class="card-img" src="@monkey.Image" alt="@monkey.Name" style="max-width: 100%; height: auto; width: 6rem;" />
+                    <FluentStack Orientation="Orientation.Vertical">
+                        <strong>@monkey.Name</strong>
+                        <p>@monkey.Location</p>
+                    </FluentStack>
+                </FluentStack>
+            </FluentCard>
         }
-    </ul>
+    </FluentStack>
 </div>
 
 @code {
@@ -33,7 +35,7 @@
     private async Task AddMonkey()
     {
         var monkey = new Monkey();
-        var dialog = await DialogService.ShowDialogAsync<CustomDialogComponent>(monkey,
+        var dialog = await DialogService.ShowDialogAsync<AddMonkeyDialogComponent>(monkey,
             new DialogParameters
                 {
                     Title = "Add a New Monkey",
@@ -45,6 +47,8 @@
         if (!result.Cancelled && result.Data is not null)
         {
             DialogData = (Monkey)result.Data;
+            var addMonkeyResult = await MonkeyService.AddMonkeyAsync(DialogData);
+            Monkeys.Add(addMonkeyResult);
         }
     }
 }
