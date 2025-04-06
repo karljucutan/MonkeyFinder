@@ -1,3 +1,4 @@
+﻿using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Web.ApiEndpoints;
@@ -13,6 +14,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddFluentUIComponents();
 
 // Add device-specific services used by the MonkeyFinder.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();

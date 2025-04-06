@@ -1,5 +1,5 @@
 ﻿@typeparam T
-@inject PersistentComponentState _persistentComponentState
+@inject PersistentComponentState PersistentComponentState
 @implements IDisposable
 
 @if (_state is not null)
@@ -20,9 +20,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _subscription = _persistentComponentState.RegisterOnPersisting(SaveState);
+        _subscription = PersistentComponentState.RegisterOnPersisting(SaveState);
 
-        if (_persistentComponentState.TryTakeFromJson<T>(StateKey, out var storedState) && storedState != null)
+        if (PersistentComponentState.TryTakeFromJson<T>(StateKey, out var storedState) && storedState != null)
         {
             _state = storedState;
         }
@@ -36,7 +36,7 @@
 
     private Task SaveState()
     {
-        _persistentComponentState.PersistAsJson(StateKey, _state);
+        PersistentComponentState.PersistAsJson(StateKey, _state);
         return Task.CompletedTask;
     }
 

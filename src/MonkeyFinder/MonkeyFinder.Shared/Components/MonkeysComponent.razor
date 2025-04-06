@@ -1,0 +1,51 @@
+@using MonkeyFinder.Shared.Models
+@using MonkeyFinder.Shared.Services
+@using MonkeyFinder.Shared.Services.Abstractions
+@inject IMonkeyService MonkeyService
+@inject IDialogService DialogService
+
+<div>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@AddMonkey">
+        Add Monkey
+    </FluentButton>
+    <p>Name: @DialogData.Name - Population: @DialogData.Population </p>
+
+    <ul class="list-group">
+        @foreach (var monkey in Monkeys)
+        {
+            <li class="card">
+                <img class="card-img" src="@monkey.Image" alt="@monkey.Name" style="width: 100px; height:100px;" />
+                <div class="card-body">
+                    <strong>@monkey.Name</strong>
+                    <p>@monkey.Location</p>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public List<Monkey> Monkeys { get; set; } = [];
+
+    private Monkey DialogData { get; set; } = new Monkey();
+
+    private async Task AddMonkey()
+    {
+        var monkey = new Monkey();
+        var dialog = await DialogService.ShowDialogAsync<CustomDialogComponent>(monkey,
+            new DialogParameters
+                {
+                    Title = "Add a New Monkey",
+                    PreventDismissOnOverlayClick = true,
+                    PreventScroll = true
+                });
+
+        var result = await dialog.Result;
+        if (!result.Cancelled && result.Data is not null)
+        {
+            DialogData = (Monkey)result.Data;
+        }
+    }
+}
+

@@ -8,10 +8,10 @@ public class ClientMonkeyService(HttpClient httpClient) : IMonkeyService
 {
     public async Task<List<Monkey>> GetMonkeysAsync()
     {
-        HttpResponseMessage response = await httpClient.GetAsync("api/monkeys");
+        var response = await httpClient.GetAsync("api/monkeys");
         if (response.IsSuccessStatusCode)
         {
-            List<Monkey>? result = await response.Content.ReadFromJsonAsync(MonkeyContext.Default.ListMonkey);
+            var result = await response.Content.ReadFromJsonAsync(MonkeyContext.Default.ListMonkey);
             return result ?? [];
         }
 

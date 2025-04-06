@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Services;
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
@@ -24,6 +25,7 @@ public static class MauiProgram
         builder.Services.AddSharedServices();
 
         builder.Services.AddMauiBlazorWebView();
+        builder.Services.AddFluentUIComponents();
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

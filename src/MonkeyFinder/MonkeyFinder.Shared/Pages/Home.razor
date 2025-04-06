@@ -21,22 +21,21 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
     <li>Assigned Render Mode: @AssignedRenderMode</li>
 </ul>
 
-<div>
-    @if (RendererInfo.IsWebViewRendering())
-    {
-        <Component Monkeys="Monkeys"></Component>
-    }
-    else
-    {
-        @* This <PersistentState> component is used to cache and persist the Monkey list state across Blazor prerendering and interactive phases.
-            It prevents redundant API/data calls by storing the result from the initial server prerender so that
-            on render mode switch it will try to get the data on PersistentComponentState if exists. *@
-        <PersistentState GetState="LoadDataAsync" StateKey="MonkeyListData" Context="context">
-            <Component Monkeys="context"></Component>
-            <Component Monkeys="context"></Component>
-        </PersistentState>
-    }
-</div>
+
+@if (RendererInfo.IsWebViewRendering())
+{
+    <MonkeysComponent Monkeys="Monkeys"></MonkeysComponent>
+}
+else
+{
+    @* This <PersistentState> component is used to cache and persist the Monkey list state across Blazor prerendering and interactive phases.
+        It prevents redundant API/data calls by storing the result from the initial server prerender so that
+        on render mode switch it will try to get the data on PersistentComponentState if exists. *@
+    <PersistentStateComponent GetState="LoadDataAsync" StateKey="MonkeyListData" Context="context">
+        <MonkeysComponent Monkeys="context"></MonkeysComponent>
+    </PersistentStateComponent>
+}
+
 
 @code {
     private string factor => FormFactor.GetFormFactor();
@@ -48,6 +47,8 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
     {
         // You will notice that OnInitializedAsync will be called twice pre-rendering and interactive phase. But, OnInitAsyncCounter will reset.
         // This is because the Blazor WebAssembly app is prerendered on the server and then rehydrated on the client.
+        OnInitAsyncCounter++; 
+
         // If there is an api call here, it will call twice. But, with PersistentState component, it will try to get the data from the cache if exists else it will execute the GetState(Func).
        if (RendererInfo.IsWebViewRendering())
             Monkeys = await LoadDataAsync();
