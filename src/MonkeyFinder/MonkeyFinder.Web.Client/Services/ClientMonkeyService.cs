@@ -6,10 +6,16 @@ namespace MonkeyFinder.Web.Client.Services;
 
 public class ClientMonkeyService(HttpClient httpClient) : IMonkeyService
 {
-    public Task<Monkey> AddMonkeyAsync(Monkey monkey)
+    public async Task<Monkey> AddMonkeyAsync(Monkey monkey)
     {
-        // TODO: KLJ - implement the Backend Call.
-        throw new NotImplementedException();
+        var response = await httpClient.PostAsJsonAsync("api/monkeys", monkey);
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync(MonkeyContext.Default.Monkey);
+            return result ?? new Monkey();
+        }
+
+        throw new Exception("Failed to add monkey");
     }
 
     public async Task<List<Monkey>> GetMonkeysAsync()

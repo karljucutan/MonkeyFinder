@@ -1,4 +1,5 @@
-﻿using MonkeyFinder.Shared.Services.Abstractions;
+﻿using MonkeyFinder.Shared.Models;
+using MonkeyFinder.Shared.Services.Abstractions;
 
 namespace MonkeyFinder.Web.ApiEndpoints;
 
@@ -10,6 +11,10 @@ public static class MonkeysEndpoints
 
         group.MapGet("/", async (IMonkeyService monkeyService) => await monkeyService.GetMonkeysAsync())
             .WithName("GetAllMonkeys")
+            .WithOpenApi();
+
+        group.MapPost("/", async (IMonkeyService monkeyService, Monkey monkey) => await monkeyService.AddMonkeyAsync(monkey))
+            .WithName("AddMonkey")
             .WithOpenApi();
     }
 }

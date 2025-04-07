@@ -3,6 +3,7 @@
 @using MonkeyFinder.Shared.Services.Abstractions
 @inject IMonkeyService MonkeyService
 @inject IDialogService DialogService
+@inject NavigationManager NavigationManager
 
 <div>
     <FluentButton Appearance="Appearance.Accent" OnClick="@AddMonkey">
@@ -13,7 +14,7 @@
     <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
         @foreach (var monkey in Monkeys)
         {
-            <FluentCard>
+            <FluentCard MinimalStyle="true">
                 <FluentStack VerticalAlignment="VerticalAlignment.Center">
                     <img class="card-img" src="@monkey.Image" alt="@monkey.Name" style="max-width: 100%; height: auto; width: 6rem;" />
                     <FluentStack Orientation="Orientation.Vertical">
@@ -46,10 +47,22 @@
         var result = await dialog.Result;
         if (!result.Cancelled && result.Data is not null)
         {
-            DialogData = (Monkey)result.Data;
-            var addMonkeyResult = await MonkeyService.AddMonkeyAsync(DialogData);
-            Monkeys.Add(addMonkeyResult);
+            try
+            {
+                DialogData = (Monkey)result.Data;
+                var addMonkeyResult = await MonkeyService.AddMonkeyAsync(DialogData);
+                Monkeys.Add(addMonkeyResult);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
+    }
+
+    private void GoToDetails(Monkey monkey)
+    {
+        NavigationManager.NavigateTo($"/monkeydetails/{monkey.Name}");
     }
 }
 
