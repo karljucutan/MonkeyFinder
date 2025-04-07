@@ -14,7 +14,7 @@
     <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
         @foreach (var monkey in Monkeys)
         {
-            <FluentCard MinimalStyle="true">
+            <FluentCard MinimalStyle="true" @onclick="() => GoToDetails(monkey)">
                 <FluentStack VerticalAlignment="VerticalAlignment.Center">
                     <img class="card-img" src="@monkey.Image" alt="@monkey.Name" style="max-width: 100%; height: auto; width: 6rem;" />
                     <FluentStack Orientation="Orientation.Vertical">

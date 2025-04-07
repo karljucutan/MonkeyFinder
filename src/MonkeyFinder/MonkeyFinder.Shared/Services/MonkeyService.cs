@@ -33,6 +33,14 @@ public class MonkeyService : IMonkeyService
     {
         _monkeysList.Add(monkey);
 
-        return monkey;
+        return await Task.FromResult(monkey);
+    }
+
+    public async Task<Monkey> FindMonkeyByNameAsync(string name)
+    {
+        var monkey = _monkeysList.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase))
+            ?? throw new Exception("Monkey not found");
+
+        return await Task.FromResult(monkey);
     }
 }
