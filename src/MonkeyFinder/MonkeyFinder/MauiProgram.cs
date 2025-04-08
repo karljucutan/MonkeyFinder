@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Services;
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
+using MonkeyFinder.Shared.Services.Abstractions;
 
 namespace MonkeyFinder;
 
@@ -23,6 +25,9 @@ public static class MauiProgram
 
         // Add shared services that is in MonkeyFinder.Shared project
         builder.Services.AddSharedServices();
+
+        // Add Navigation Service for MAUI implementation
+        builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
 
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();

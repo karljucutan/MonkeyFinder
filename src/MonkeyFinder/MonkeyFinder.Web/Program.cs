@@ -1,6 +1,8 @@
-﻿using Microsoft.FluentUI.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
+using MonkeyFinder.Shared.Services.Abstractions;
 using MonkeyFinder.Web.ApiEndpoints;
 using MonkeyFinder.Web.Components;
 using MonkeyFinder.Web.Services;
@@ -22,6 +24,11 @@ builder.Services.AddSingleton<IFormFactor, FormFactor>();
 
 // Add server-side services implementation while WASM is not yet available.
 builder.Services.AddSharedServices();
+
+// Add Navigation Service for Web implementation
+builder.Services.AddScoped<INavigationService, WebNavigationService>();
+//builder.Services.AddScoped<INavigationService>(sp =>
+//new WebNavigationService(sp.GetRequiredService<NavigationManager>()));
 
 var app = builder.Build();
 

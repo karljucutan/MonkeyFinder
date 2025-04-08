@@ -1,6 +1,7 @@
 ﻿@page "/monkeydetails/{name}"
 @inject NavigationManager NavManager
 @inject IMonkeyService MonkeyService
+@inject INavigationService NavigationService
 
 <div>
     <div class="detailscard-header">
@@ -13,7 +14,7 @@
     </div>
     <div class="detailscard-body">
         <button class="detailsbutton-yellow">Show on Map</button>
-        @* <button class="detailsbutton-yellow" @onclick="AddRating">Rate This Monkey!</button> *@
+        <button class="detailsbutton-yellow" @onclick="AddRating">Rate This Monkey!</button>
         <p class="detailsdescription">@monkey.Details</p>
         <p class="detailslocation"><strong>Location:</strong> @monkey.Location</p>
         <p class="detailspopulation"><strong>Population:</strong> @monkey.Population</p>
@@ -36,8 +37,8 @@
         NavManager.NavigateTo("/");
     }
 
-    // private void AddRating()
-    // {
-    //     ((Application)app).Windows[0].Page!.Navigation.PushAsync(new MonkeyRatingPage());
-    // }
+    private async Task AddRating()
+    {
+        await NavigationService.NavigateToRatingPageAsync();
+    }
 }

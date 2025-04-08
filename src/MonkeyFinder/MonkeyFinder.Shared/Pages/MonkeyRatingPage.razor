@@ -1,0 +1,35 @@
+﻿@using MonkeyFinder.Shared.Layout
+@layout EmptyLayout
+@page "/rating"
+@inject NavigationManager NavigationManager
+
+<FluentCard Style="padding: 20px; max-width: 400px; margin: auto; margin-top: 50px;">
+    <h2 style="text-align: center;">Rate a Monkey</h2>
+
+    <p style="text-align: center;">How would you rate this monkey?</p>
+
+    <FluentRating @bind-Value="RatingValue" Max="5" Style="display: flex; justify-content: center; margin-bottom: 20px;" />
+
+    <FluentButton Appearance="Appearance.Accent" Style="width: 100%; margin-bottom: 10px;" @onclick="SubmitRating">
+        Submit Rating
+    </FluentButton>
+
+    <FluentButton Appearance="Appearance.Neutral" Style="width: 100%;" @onclick="ClosePage">
+        Close Page
+    </FluentButton>
+</FluentCard>
+
+@code {
+    private int RatingValue { get; set; } = 0;
+
+    private void SubmitRating()
+    {
+        // Handle the rating submission logic here
+        Console.WriteLine($"Rating submitted: {RatingValue}");
+    }
+
+    private void ClosePage()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
