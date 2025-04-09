@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.FluentUI.AspNetCore.Components;
+﻿using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Shared.Services.Abstractions;
@@ -30,6 +29,9 @@ builder.Services.AddScoped<INavigationService, WebNavigationService>();
 //builder.Services.AddScoped<INavigationService>(sp =>
 //new WebNavigationService(sp.GetRequiredService<NavigationManager>()));
 
+builder.Services.AddScoped<IConnectivityService, MonkeyFinder.Web.Client.Services.WebConnectivityService>();
+
+
 var app = builder.Build();
 
 // Open API documentation and Scalar API references
@@ -53,7 +55,8 @@ else
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+//app.UseStaticFiles();
+app.MapStaticAssets();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

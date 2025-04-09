@@ -1,7 +1,24 @@
 ﻿@page "/options"
+@inject IConnectivityService ConnectivityService
 
 <h3>Options</h3>
 
-@code {
+<button class="button-yellow" @onclick="CheckConnectivity">Check Connectivity</button>
 
+@if (ConnectivityInfo != null)
+{
+    <p>Connected: @(ConnectivityInfo.IsConnected ? "Yes" : "No")</p>
+    <p>Connection Type: @ConnectivityInfo.ConnectionType</p>
+    <p>Platform: @ConnectivityInfo.Platform</p>
+    <p>Available Profiles: @string.Join(", ", ConnectivityInfo.AvailableConnectionProfiles)</p>
+}
+
+@code {
+    private ConnectivityInfo? ConnectivityInfo { get; set; }
+
+    private async Task CheckConnectivity()
+    {
+        ConnectivityInfo = await ConnectivityService.GetConnectivityInfoAsync();
+        Console.WriteLine($"Connected: {ConnectivityInfo.IsConnected}, Type: {ConnectivityInfo.AvailableConnectionProfiles.FirstOrDefault()}, Platform: {ConnectivityInfo.Platform}");
+    }
 }

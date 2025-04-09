@@ -17,4 +17,8 @@
     <ProjectReference Include="..\MonkeyFinder.Shared\MonkeyFinder.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\connectivity.js" />
+  </ItemGroup>
+
 </Project>

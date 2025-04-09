@@ -29,6 +29,8 @@ public static class MauiProgram
         // Add Navigation Service for MAUI implementation
         builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
 
+        builder.Services.AddSingleton<IConnectivityService, MauiConnectivityService>();
+
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();
 
