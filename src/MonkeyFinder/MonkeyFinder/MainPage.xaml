@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:MonkeyFinder"
              xmlns:shared="clr-namespace:MonkeyFinder.Shared;assembly=MonkeyFinder.Shared"
              x:Class="MonkeyFinder.MainPage"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             NavigationPage.HasNavigationBar="False">
 
     <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>

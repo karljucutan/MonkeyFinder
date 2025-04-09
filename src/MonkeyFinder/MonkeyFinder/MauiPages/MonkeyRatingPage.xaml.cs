@@ -12,6 +12,11 @@ public partial class MonkeyRatingPage : ContentPage
     private void Button_Clicked(object sender, EventArgs e)
     {
         Debug.WriteLine("Monkey rating: " + rating.Value);
-        Navigation.PopModalAsync();
+
+        // This will pop the page to the navigation stack
+        Navigation.PopAsync();
+
+        // This will pop the modal if the PushModalAsync was used
+        // Navigation.PopModalAsync();
     }
 }

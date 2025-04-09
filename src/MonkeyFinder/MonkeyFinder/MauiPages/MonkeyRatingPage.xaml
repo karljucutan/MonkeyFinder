@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:alohakit="clr-namespace:AlohaKit.Controls;assembly=AlohaKit"
              x:Class="MonkeyFinder.MauiPages.MonkeyRatingPage"
-             Title="Rate a monkey">
+             Title="Rate a monkey"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="True">
     
     <VerticalStackLayout VerticalOptions="Center"
                          Spacing="15" Padding="10">
@@ -16,7 +18,8 @@
 
         <alohakit:Rating x:Name="rating"/>
 
-        <Button Text="Close page" Clicked="Button_Clicked"/>
+        <!--Removed for the Maui Monkey Rating page to use the native navigation service back button-->
+        <!--<Button Text="Close page" Clicked="Button_Clicked"/>-->
 
     </VerticalStackLayout>
 </ContentPage>

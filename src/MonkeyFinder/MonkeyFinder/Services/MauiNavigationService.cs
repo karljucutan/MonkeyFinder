@@ -8,12 +8,15 @@ public class MauiNavigationService : INavigationService
     public async Task NavigateToRatingPageAsync()
     {
         var currentPage = Application.Current?.Windows[0].Page;
-        var currentPage2 = Application.Current?.MainPage.Navigation.NavigationStack.FirstOrDefault();
-        var currentPage3 = Application.Current?.MainPage;
 
         if (currentPage != null)
         {
-            await currentPage.Navigation.PushModalAsync(new MonkeyRatingPage());
+            // This will push the page to the navigation stack
+            await currentPage.Navigation.PushAsync(new MonkeyRatingPage(), true);
+
+
+            // This will push the page as a modal. A modal page encourages users to complete a self-contained task that cannot be navigated away from until the task is completed or cancelled.
+            //await currentPage.Navigation.PushModalAsync(new MonkeyRatingPage(), true);
         }
     }
 }
