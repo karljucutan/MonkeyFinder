@@ -1,14 +1,19 @@
 @using MonkeyFinder.Shared.Models
+@using MonkeyFinder.Shared.Models.GeoLocation
 @using MonkeyFinder.Shared.Services
 @using MonkeyFinder.Shared.Services.Abstractions
 @inject IMonkeyService MonkeyService
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
+@inject IGeolocationService GeolocationService
 
 <div>
     <FluentButton Appearance="Appearance.Accent" OnClick="@AddMonkey">
         Add Monkey
     </FluentButton>
+    <button class="button-yellow" onclick="@FindClosestMonkey">
+        Find Closest Monkey
+    </button>
     <p>Name: @DialogData.Name - Population: @DialogData.Population </p>
 
     <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
@@ -63,6 +68,37 @@
     private void GoToDetails(Monkey monkey)
     {
         NavigationManager.NavigateTo($"/monkeydetails/{monkey.Name}");
+    }
+
+    private async Task FindClosestMonkey()
+    {
+        try
+        {
+            // Get cached location, else get real location.
+            var location = await GeolocationService.GetLastKnownLocationAsync();
+            if (location is not null)
+            {
+                location = await GeolocationService.GetCurrentLocationAsync(new GeolocationRequest
+                {
+                    DesiredAccuracy = GeolocationAccuracy.High,
+                    Timeout = TimeSpan.FromSeconds(30)
+                });
+            }
+
+            // Find closest monkey to us
+            var closestMonkey = Monkeys.OrderBy(m => GeolocationService.CalculateDistance(location ?? new(), new Location(m.Latitude, m.Longitude), DistanceUnits.Miles))
+                .FirstOrDefault();
+
+            var closestMonkeyMessage = closestMonkey is not null
+            ? $"{closestMonkey.Name} is closest, this monkey is in {closestMonkey.Location}"
+            : "The closest monkey could not be determined!";
+
+            await DialogService.ShowInfoAsync(closestMonkeyMessage);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unable to query location: {ex.Message}");
+        }
     }
 }
 

@@ -3,9 +3,10 @@ using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Shared.Services.Abstractions;
 using MonkeyFinder.Web.ApiEndpoints;
+using MonkeyFinder.Web.Client.Services;
 using MonkeyFinder.Web.Components;
-using MonkeyFinder.Web.Services;
 using Scalar.AspNetCore;
+using FormFactor = MonkeyFinder.Web.Services.FormFactor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +30,8 @@ builder.Services.AddScoped<INavigationService, WebNavigationService>();
 //builder.Services.AddScoped<INavigationService>(sp =>
 //new WebNavigationService(sp.GetRequiredService<NavigationManager>()));
 
-builder.Services.AddScoped<IConnectivityService, MonkeyFinder.Web.Client.Services.WebConnectivityService>();
-
+builder.Services.AddScoped<IConnectivityService, WebConnectivityService>();
+builder.Services.AddScoped<IGeolocationService, WebGeolocationService>();
 
 var app = builder.Build();
 

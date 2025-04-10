@@ -22,6 +22,7 @@ builder.Services.AddScoped<INavigationService, WebNavigationService>();
 //new WebNavigationService(sp.GetRequiredService<NavigationManager>()));
 
 builder.Services.AddSingleton<IConnectivityService, WebConnectivityService>();
+builder.Services.AddScoped<IGeolocationService, WebGeolocationService>();
 
 
 // Add shared services that is in MonkeyFinder.Shared project

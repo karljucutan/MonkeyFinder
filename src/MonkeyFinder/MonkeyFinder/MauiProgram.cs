@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Services;
 using MonkeyFinder.Shared.Extensions;
@@ -30,6 +29,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
 
         builder.Services.AddSingleton<IConnectivityService, MauiConnectivityService>();
+
+        builder.Services.AddSingleton<IGeolocation>(sp => Geolocation.Default);
+
+        builder.Services.AddSingleton<IGeolocationService, MauiGeolocationService>();
+
 
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();
