@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MonkeyFinder.Shared.Services.Abstractions;
 
-namespace MonkeyFinder.Shared.Services;
+namespace MonkeyFinder.Web.Client.Services;
+
 public class WebNavigationService : INavigationService
 {
     private readonly NavigationManager _navigationManager;

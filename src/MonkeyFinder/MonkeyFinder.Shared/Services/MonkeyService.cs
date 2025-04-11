@@ -2,6 +2,8 @@
 using System.Net.Http.Json;
 
 namespace MonkeyFinder.Shared.Services;
+
+// This should be on the Web project and the MAUI apps will get monkeys using the Web API.
 public class MonkeyService : IMonkeyService
 {
     private readonly HttpClient _httpClient;
