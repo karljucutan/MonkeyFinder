@@ -1,9 +1,12 @@
 ﻿@page "/options"
 @inject IConnectivityService ConnectivityService
+@inject IJSRuntime JSRuntime
 
 <h3>Options</h3>
 
 <button class="button-yellow" @onclick="CheckConnectivity">Check Connectivity</button>
+<button class="button-yellow" @onclick="ChangeTheme">Change Theme</button>
+
 
 @if (ConnectivityInfo != null)
 {
@@ -20,5 +23,10 @@
     {
         ConnectivityInfo = await ConnectivityService.GetConnectivityInfoAsync();
         Console.WriteLine($"Connected: {ConnectivityInfo.IsConnected}, Type: {ConnectivityInfo.AvailableConnectionProfiles.FirstOrDefault()}, Platform: {ConnectivityInfo.Platform}");
+    }
+
+    private async Task ChangeTheme()
+    {
+        await JSRuntime.InvokeVoidAsync("setTheme", "dark");
     }
 }

@@ -8,7 +8,8 @@
 @inject IGeolocationService GeolocationService
 
 <div>
-    <FluentButton Appearance="Appearance.Accent" OnClick="@AddMonkey">
+    @* Fluent UI implementation *@
+@*     <FluentButton Appearance="Appearance.Accent" OnClick="@AddMonkey">
         Add Monkey
     </FluentButton>
     <button class="button-yellow" onclick="@FindClosestMonkey">
@@ -29,7 +30,32 @@
                 </FluentStack>
             </FluentCard>
         }
-    </FluentStack>
+    </FluentStack> *@
+    <div>
+        <button class="button-yellow" @onclick="AddMonkey">Add New Monkey</button>
+        <button class="button-yellow" @onclick="FindClosestMonkey">Find Closest Monkey</button>
+
+        @if (Monkeys is null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <ul class="card-list">
+                @foreach (var monkey in Monkeys)
+                {
+                    <li @onclick="()=>GoToDetails(monkey)" class="card-item">
+                        <img class="card-image" src="@monkey.Image">
+                        <div class="card-content">
+                            <h2>@monkey.Name</h2>
+                            <p>@monkey.Location</p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
 </div>
 
 @code {

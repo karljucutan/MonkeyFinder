@@ -192,7 +192,7 @@ textarea {
 
 .detailscard-header {
     background-color: black;
-    padding: "0 0 25px 0";
+    padding: 0 0 25px 0;
     /* Top = Right = Bottom = Left = 25px */
     position: relative;
 }

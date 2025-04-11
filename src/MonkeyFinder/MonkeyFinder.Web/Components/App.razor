@@ -7,7 +7,8 @@
     <base href="/" />
     <link rel="stylesheet" href="_content/MonkeyFinder.Shared/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="_content/MonkeyFinder.Shared/app.css" />
-    @* <link rel="stylesheet" href="_content/MonkeyFinder.Shared/darkmode.css" /> *@
+    <link id="light-mode" rel="stylesheet" href="app.css" />
+    <link id="dark-mode" rel="stylesheet" href="_content/MonkeyFinder.Shared/darkmode.css" disabled/>
     <link rel="stylesheet" href="MonkeyFinder.Web.styles.css" />
     <link rel="icon" type="image/png" href="_content/MonkeyFinder.Shared/favicon.png" />
     <HeadOutlet @rendermode="InteractiveAuto" />
@@ -19,6 +20,8 @@
     <script src="js/connectivity.js"></script>
     <script src="js/geolocation.js"></script>
     <script src="js/googlemap.js"></script>
+    <script src="_content/MonkeyFinder.Shared/js/theme.js"></script>
+
 </body>
 
 </html>
