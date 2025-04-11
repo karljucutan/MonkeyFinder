@@ -34,6 +34,9 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IGeolocationService, MauiGeolocationService>();
 
+        builder.Services.AddSingleton<IMap>(sp => Map.Default);
+
+        builder.Services.AddSingleton<IMapService, MauiMapService>();
 
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();

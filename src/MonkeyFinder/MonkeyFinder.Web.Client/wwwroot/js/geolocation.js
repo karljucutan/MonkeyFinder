@@ -1,4 +1,4 @@
-﻿window.getUserLocation = () => {
+﻿window.getUserLocation = function () {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
             (position) => {

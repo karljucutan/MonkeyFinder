@@ -17,3 +17,9 @@
         };
     }
 };
+// For export/import.
+//      use export function getNetworkInformation()
+// Call the module like this, or add a field and lazyload.
+//      var module = await JS.InvokeAsync<IJSObjectReference>("import", "/js/interops.js");
+// Invoke the method
+//      var networkInfo = await module.InvokeAsync < NetworkInfo > ("getNetworkInformation");

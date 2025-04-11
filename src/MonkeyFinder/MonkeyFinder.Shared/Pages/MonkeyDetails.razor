@@ -1,7 +1,10 @@
 ﻿@page "/monkeydetails/{name}"
+@using MonkeyFinder.Shared.Models.Map
 @inject NavigationManager NavManager
 @inject IMonkeyService MonkeyService
 @inject INavigationService NavigationService
+@inject IDialogService DialogService
+@inject IMapService MapService
 
 <div>
     <div class="detailscard-header">
@@ -13,7 +16,7 @@
         <h2 class="detailsimage-title">@monkey.Name</h2>
     </div>
     <div class="detailscard-body">
-        <button class="detailsbutton-yellow">Show on Map</button>
+        <button class="detailsbutton-yellow" @onclick="OpenMap" >Show on Map</button>
         <button class="detailsbutton-yellow" @onclick="AddRating">Rate This Monkey!</button>
         <p class="detailsdescription">@monkey.Details</p>
         <p class="detailslocation"><strong>Location:</strong> @monkey.Location</p>
@@ -40,5 +43,27 @@
     private async Task AddRating()
     {
         await NavigationService.NavigateToRatingPageAsync();
+    }
+
+    private async Task OpenMap()
+    {
+        try
+        {
+            if (MapService is null)
+            {
+                throw new Exception("No map service available.");
+            }
+
+            await MapService.OpenAsync(monkey.Latitude, monkey.Longitude, new MapLaunchOptions
+                {
+                    Name = monkey.Name,
+                    NavigationMode = NavigationMode.None
+                });
+        }
+        catch (Exception e)
+        {
+            await DialogService.ShowErrorAsync("Error", "Unable to open map.");
+            Console.WriteLine(e.Message);
+        }
     }
 }

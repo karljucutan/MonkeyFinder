@@ -32,6 +32,7 @@ builder.Services.AddScoped<INavigationService, WebNavigationService>();
 
 builder.Services.AddScoped<IConnectivityService, WebConnectivityService>();
 builder.Services.AddScoped<IGeolocationService, WebGeolocationService>();
+builder.Services.AddScoped<IMapService, WebMapService>();
 
 var app = builder.Build();
 

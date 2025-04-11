@@ -23,7 +23,7 @@ builder.Services.AddScoped<INavigationService, WebNavigationService>();
 
 builder.Services.AddSingleton<IConnectivityService, WebConnectivityService>();
 builder.Services.AddScoped<IGeolocationService, WebGeolocationService>();
-
+builder.Services.AddScoped<IMapService, WebMapService>();
 
 // Add shared services that is in MonkeyFinder.Shared project
 //builder.Services.AddSharedServices(); // There is a CORS issue when the CSR calls https://montemagno.com/monkeys.json (strict-origin-when-cross-origin) Calling it should be done in the Server acting as a proxy and intermediary between the frontend and other APIs/systems.
