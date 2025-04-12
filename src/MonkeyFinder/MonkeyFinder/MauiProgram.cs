@@ -38,6 +38,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IMapService, MauiMapService>();
 
+        builder.Services.AddSingleton<ThemeService>();
+
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();
 

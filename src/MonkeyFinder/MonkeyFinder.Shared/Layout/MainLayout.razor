@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject ThemeService ThemeService
 
 <PageTitle>MonkeyFinder</PageTitle>
 
@@ -24,8 +25,25 @@
     <span class="dismiss">🗙</span>
 </div>
 
-@* <FluentToastProvider /> *@
+<FluentDesignTheme 
+    Mode="@ThemeService.CurrentTheme"
+    CustomColor="#ffc107"
+    StorageName="theme" />
+
+<FluentToastProvider />
 <FluentDialogProvider />
-@* <FluentTooltipProvider /> *@
-@* <FluentMessageBarProvider /> *@
-@* <FluentMenuProvider /> *@
+<FluentTooltipProvider />
+<FluentMessageBarProvider />
+<FluentMenuProvider />
+
+@code {
+    protected override void OnInitialized()
+    {
+        ThemeService.OnThemeChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnThemeChanged -= StateHasChanged;
+    }
+}

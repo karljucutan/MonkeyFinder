@@ -1,12 +1,22 @@
 ﻿@page "/options"
+@using System.Diagnostics
 @inject IConnectivityService ConnectivityService
 @inject IJSRuntime JSRuntime
+@inject ThemeService ThemeService
 
 <h3>Options</h3>
 
 <button class="button-yellow" @onclick="CheckConnectivity">Check Connectivity</button>
-<button class="button-yellow" @onclick="ChangeTheme">Change Theme</button>
+@* <button class="button-yellow" @onclick="ChangeTheme">Change Theme</button>
+ *@
+<FluentButton Appearance="Appearance.Accent" Id="btnSelectTheme" OnClick="@(() => IsSelectThemeMenuOpen = true)">Select theme</FluentButton>
+<FluentMenu Anchor="btnSelectTheme" Open="IsSelectThemeMenuOpen" @onmenuchange=HandleOnMenuChanged>
+    <FluentMenuItem Id="1">Light</FluentMenuItem>
+    <FluentMenuItem Id="2">Dark</FluentMenuItem>
+    <FluentMenuItem Id="3">System</FluentMenuItem>
+</FluentMenu>
 
+<FluentDesignTheme></FluentDesignTheme>
 
 @if (ConnectivityInfo != null)
 {
@@ -17,7 +27,11 @@
 }
 
 @code {
+    private string selectedTheme = string.Empty;
+    private bool IsSelectThemeMenuOpen = false;
+
     private ConnectivityInfo? ConnectivityInfo { get; set; }
+    public DesignThemeModes Mode { get; set; } = DesignThemeModes.Light;
 
     private async Task CheckConnectivity()
     {
@@ -28,5 +42,77 @@
     private async Task ChangeTheme()
     {
         await JSRuntime.InvokeVoidAsync("setTheme", "dark");
+    }
+
+    public async Task HandleOnMenuChanged(MenuChangeEventArgs args)
+    {
+        selectedTheme = args.Id ?? "1";
+        Debug.WriteLine($"Selected Value: {args.Id}");
+        var selectedValue = args.Id;
+
+        if (selectedValue == "1")
+        {
+            ThemeService.CurrentTheme = DesignThemeModes.Light;
+        }
+        else if (selectedValue == "2")
+        {
+            ThemeService.CurrentTheme = DesignThemeModes.Dark;
+        }
+        else if (selectedValue == "3")
+        {
+            ThemeService.CurrentTheme = DesignThemeModes.System;
+        }
+
+        await Task.CompletedTask;
+
+        // if (string.Equals(selectedValue, "2"))
+        // {
+        //     Mode = DesignThemeModes.Dark;
+        //     await JSRuntime.InvokeVoidAsync("setTheme", "dark");
+
+        //     if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
+        //     {
+        //         StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#444034"));
+        //         StatusBar.SetStyle(StatusBarStyle.LightContent);
+        //     }
+        // }
+        // else if (string.Equals(selectedValue, "1"))
+        // {
+        //     Mode = DesignThemeModes.Light;
+        //     await JSRuntime.InvokeVoidAsync("setTheme", "light");
+
+        //     if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
+        //     {
+        //         StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#DDAF24"));
+        //         StatusBar.SetStyle(StatusBarStyle.DarkContent);
+        //     }
+        // }
+        // else
+        // {
+        //     Mode = DesignThemeModes.System;
+        //     AppTheme currentTheme = ((Application)app).RequestedTheme;
+        //     Debug.WriteLine("Current System Theme : " + currentTheme.ToString());
+
+        //     if (currentTheme == AppTheme.Dark)
+        //     {
+        //         await JSRuntime.InvokeVoidAsync("setTheme", "dark");
+
+        //         if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
+        //         {
+        //             StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#444034"));
+        //             StatusBar.SetStyle(StatusBarStyle.LightContent);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         await JSRuntime.InvokeVoidAsync("setTheme", "light");
+
+        //         if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
+        //         {
+        //             StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#DDAF24"));
+        //             StatusBar.SetStyle(StatusBarStyle.DarkContent);
+        //         }
+        //     }
+        // }
     }
 }
