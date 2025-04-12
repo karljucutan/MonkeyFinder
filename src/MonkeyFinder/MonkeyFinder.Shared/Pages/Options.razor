@@ -2,7 +2,7 @@
 @using System.Diagnostics
 @inject IConnectivityService ConnectivityService
 @inject IJSRuntime JSRuntime
-@inject ThemeService ThemeService
+@inject ThemeState ThemeState
 
 <h3>Options</h3>
 
@@ -10,7 +10,7 @@
 @* <button class="button-yellow" @onclick="ChangeTheme">Change Theme</button>
  *@
 <FluentButton Appearance="Appearance.Accent" Id="btnSelectTheme" OnClick="@(() => IsSelectThemeMenuOpen = true)">Select theme</FluentButton>
-<FluentMenu Anchor="btnSelectTheme" Open="IsSelectThemeMenuOpen" @onmenuchange=HandleOnMenuChanged>
+<FluentMenu Anchor="btnSelectTheme" @bind-Open="IsSelectThemeMenuOpen" @onmenuchange=HandleOnMenuChanged>
     <FluentMenuItem Id="1">Light</FluentMenuItem>
     <FluentMenuItem Id="2">Dark</FluentMenuItem>
     <FluentMenuItem Id="3">System</FluentMenuItem>
@@ -52,15 +52,17 @@
 
         if (selectedValue == "1")
         {
-            ThemeService.CurrentTheme = DesignThemeModes.Light;
+            ThemeState.CurrentTheme = DesignThemeModes.Light;
+            await JSRuntime.InvokeVoidAsync("setTheme", "light");
         }
         else if (selectedValue == "2")
         {
-            ThemeService.CurrentTheme = DesignThemeModes.Dark;
+            ThemeState.CurrentTheme = DesignThemeModes.Dark;
+            await JSRuntime.InvokeVoidAsync("setTheme", "dark");
         }
         else if (selectedValue == "3")
         {
-            ThemeService.CurrentTheme = DesignThemeModes.System;
+            ThemeState.CurrentTheme = DesignThemeModes.System;
         }
 
         await Task.CompletedTask;

@@ -1,7 +1,8 @@
 ﻿using Microsoft.FluentUI.AspNetCore.Components;
 
-namespace MonkeyFinder.Shared.Services;
-public class ThemeService
+namespace MonkeyFinder.Shared.States;
+
+public class ThemeState
 {
     public event Action? OnThemeChanged;
 

@@ -4,6 +4,7 @@ using MonkeyFinder.Services;
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Shared.Services.Abstractions;
+using MonkeyFinder.Shared.States;
 
 namespace MonkeyFinder;
 
@@ -38,7 +39,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<IMapService, MauiMapService>();
 
-        builder.Services.AddSingleton<ThemeService>();
+        builder.Services.AddSingleton<ThemeState>();
 
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();

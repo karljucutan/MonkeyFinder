@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
-@inject ThemeService ThemeService
+@inject ThemeState ThemeState
+@implements IDisposable
 
 <PageTitle>MonkeyFinder</PageTitle>
 
@@ -26,7 +27,7 @@
 </div>
 
 <FluentDesignTheme 
-    Mode="@ThemeService.CurrentTheme"
+    Mode="@ThemeState.CurrentTheme"
     CustomColor="#ffc107"
     StorageName="theme" />
 
@@ -39,11 +40,11 @@
 @code {
     protected override void OnInitialized()
     {
-        ThemeService.OnThemeChanged += StateHasChanged;
+        ThemeState.OnThemeChanged += StateHasChanged;
     }
 
     public void Dispose()
     {
-        ThemeService.OnThemeChanged -= StateHasChanged;
+        ThemeState.OnThemeChanged -= StateHasChanged;
     }
 }

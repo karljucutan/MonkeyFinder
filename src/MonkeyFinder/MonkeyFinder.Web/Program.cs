@@ -2,6 +2,7 @@
 using MonkeyFinder.Shared.Extensions;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Shared.Services.Abstractions;
+using MonkeyFinder.Shared.States;
 using MonkeyFinder.Web.ApiEndpoints;
 using MonkeyFinder.Web.Client.Services;
 using MonkeyFinder.Web.Components;
@@ -33,7 +34,7 @@ builder.Services.AddScoped<INavigationService, WebNavigationService>();
 builder.Services.AddScoped<IConnectivityService, WebConnectivityService>();
 builder.Services.AddScoped<IGeolocationService, WebGeolocationService>();
 builder.Services.AddScoped<IMapService, WebMapService>();
-builder.Services.AddScoped<ThemeService>();
+builder.Services.AddScoped<ThemeState>();
 
 var app = builder.Build();
 
