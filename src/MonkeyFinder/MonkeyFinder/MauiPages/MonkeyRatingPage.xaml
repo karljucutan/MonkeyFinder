@@ -5,7 +5,8 @@
              x:Class="MonkeyFinder.MauiPages.MonkeyRatingPage"
              Title="Rate a monkey"
              NavigationPage.HasNavigationBar="True"
-             NavigationPage.HasBackButton="True">
+             NavigationPage.HasBackButton="True"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
     
     <VerticalStackLayout VerticalOptions="Center"
                          Spacing="15" Padding="10">
@@ -14,7 +15,8 @@
                VerticalOptions="Center"
                HorizontalOptions="Center"
                HorizontalTextAlignment="Center"
-               FontSize="20"/>
+               FontSize="20"
+               TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
 
         <alohakit:Rating x:Name="rating"/>
 
