@@ -3,10 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MonkeyFinder"
              xmlns:shared="clr-namespace:MonkeyFinder.Shared;assembly=MonkeyFinder.Shared"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MonkeyFinder.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              NavigationPage.HasNavigationBar="False">
 
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#D39E00" 
+                                   StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+    
     <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>
             <RootComponent Selector="#app" ComponentType="{x:Type shared:Routes}" />

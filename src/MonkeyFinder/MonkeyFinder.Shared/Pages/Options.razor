@@ -62,59 +62,21 @@
         }
         else if (selectedValue == "3")
         {
-            ThemeState.CurrentTheme = DesignThemeModes.System;
+            // Detect the system theme using JavaScript
+            var systemTheme = await JSRuntime.InvokeAsync<string>("getSystemTheme");
+
+            if (systemTheme == "dark")
+            {
+                ThemeState.CurrentTheme = DesignThemeModes.Dark;
+                await JSRuntime.InvokeVoidAsync("setTheme", "dark");
+            }
+            else
+            {
+                ThemeState.CurrentTheme = DesignThemeModes.Light;
+                await JSRuntime.InvokeVoidAsync("setTheme", "light");
+            }
         }
 
         await Task.CompletedTask;
-
-        // if (string.Equals(selectedValue, "2"))
-        // {
-        //     Mode = DesignThemeModes.Dark;
-        //     await JSRuntime.InvokeVoidAsync("setTheme", "dark");
-
-        //     if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
-        //     {
-        //         StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#444034"));
-        //         StatusBar.SetStyle(StatusBarStyle.LightContent);
-        //     }
-        // }
-        // else if (string.Equals(selectedValue, "1"))
-        // {
-        //     Mode = DesignThemeModes.Light;
-        //     await JSRuntime.InvokeVoidAsync("setTheme", "light");
-
-        //     if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
-        //     {
-        //         StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#DDAF24"));
-        //         StatusBar.SetStyle(StatusBarStyle.DarkContent);
-        //     }
-        // }
-        // else
-        // {
-        //     Mode = DesignThemeModes.System;
-        //     AppTheme currentTheme = ((Application)app).RequestedTheme;
-        //     Debug.WriteLine("Current System Theme : " + currentTheme.ToString());
-
-        //     if (currentTheme == AppTheme.Dark)
-        //     {
-        //         await JSRuntime.InvokeVoidAsync("setTheme", "dark");
-
-        //         if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
-        //         {
-        //             StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#444034"));
-        //             StatusBar.SetStyle(StatusBarStyle.LightContent);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         await JSRuntime.InvokeVoidAsync("setTheme", "light");
-
-        //         if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS)
-        //         {
-        //             StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromArgb("#DDAF24"));
-        //             StatusBar.SetStyle(StatusBarStyle.DarkContent);
-        //         }
-        //     }
-        // }
     }
 }
