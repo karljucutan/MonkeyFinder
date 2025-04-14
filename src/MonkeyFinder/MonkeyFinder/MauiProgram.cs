@@ -43,6 +43,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<ThemeState>();
 
+        builder.Services.AddSingleton<MonkeyRatingState>();
+
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddFluentUIComponents();
 

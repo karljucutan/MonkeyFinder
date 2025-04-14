@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FluentUI.AspNetCore.Components;
 using MonkeyFinder.Shared.Services;
 using MonkeyFinder.Shared.Services.Abstractions;
@@ -26,6 +27,8 @@ builder.Services.AddSingleton<IConnectivityService, WebConnectivityService>();
 builder.Services.AddSingleton<IGeolocationService, WebGeolocationService>();
 builder.Services.AddSingleton<IMapService, WebMapService>();
 builder.Services.AddSingleton<ThemeState>();
+builder.Services.AddSingleton<MonkeyRatingState>();
+
 
 // Add shared services that is in MonkeyFinder.Shared project
 //builder.Services.AddSharedServices(); // There is a CORS issue when the CSR calls https://montemagno.com/monkeys.json (strict-origin-when-cross-origin) Calling it should be done in the Server acting as a proxy and intermediary between the frontend and other APIs/systems.

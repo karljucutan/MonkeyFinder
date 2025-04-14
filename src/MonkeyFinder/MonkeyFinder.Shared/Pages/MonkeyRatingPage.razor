@@ -2,6 +2,7 @@
 @layout EmptyLayout
 @page "/rating"
 @inject NavigationManager NavigationManager
+@inject MonkeyRatingState MonkeyRatingState
 
 <FluentCard Style="padding: 20px; max-width: 400px; margin: auto; margin-top: 50px;">
     <h2 style="text-align: center;">Rate a Monkey</h2>
@@ -22,10 +23,22 @@
 @code {
     private int RatingValue { get; set; } = 0;
 
+    protected override async Task OnInitializedAsync()
+    {
+        RatingValue = MonkeyRatingState.GetRating(MonkeyRatingState.SelectedMonkey!);
+
+        await Task.CompletedTask;
+    }
+
+
     private void SubmitRating()
     {
         // Handle the rating submission logic here
+        MonkeyRatingState.AddOrUpdateRating(MonkeyRatingState.SelectedMonkey!, RatingValue);
+
         Console.WriteLine($"Rating submitted: {RatingValue}");
+
+        ClosePage();
     }
 
     private void ClosePage()

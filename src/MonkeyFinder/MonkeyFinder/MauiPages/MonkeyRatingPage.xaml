@@ -21,7 +21,7 @@
         <alohakit:Rating x:Name="rating"/>
 
         <!--Removed for the Maui Monkey Rating page to use the native navigation service back button-->
-        <!--<Button Text="Close page" Clicked="Button_Clicked"/>-->
+        <!--<Button Text="Close page" Clicked="CloseButton_Clicked"/>-->
 
     </VerticalStackLayout>
 </ContentPage>

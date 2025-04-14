@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MonkeyFinder.Shared.Services.Abstractions;
+using MonkeyFinder.Shared.States;
 
 namespace MonkeyFinder.Web.Client.Services;
 
@@ -12,7 +13,7 @@ public class WebNavigationService : INavigationService
         _navigationManager = navigationManager;
     }
 
-    public Task NavigateToRatingPageAsync()
+    public Task NavigateToRatingPageAsync(MonkeyRatingState monkeyRatingState)
     {
         _navigationManager.NavigateTo("/rating");
         return Task.CompletedTask;

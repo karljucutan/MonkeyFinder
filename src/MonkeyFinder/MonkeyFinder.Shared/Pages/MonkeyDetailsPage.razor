@@ -5,6 +5,7 @@
 @inject INavigationService NavigationService
 @inject IDialogService DialogService
 @inject IMapService MapService
+@inject MonkeyRatingState MonkeyRatingState
 
 <div>
     <div class="detailscard-header">
@@ -21,6 +22,7 @@
         <p class="detailsdescription">@monkey.Details</p>
         <p class="detailslocation"><strong>Location:</strong> @monkey.Location</p>
         <p class="detailspopulation"><strong>Population:</strong> @monkey.Population</p>
+        <p class="detailsrating"><strong>Rating:</strong> @MonkeyRatingState.GetRating(monkey)</p>
     </div>
 </div>
 
@@ -33,6 +35,11 @@
     protected override async Task OnInitializedAsync()
     {
         monkey = await MonkeyService.FindMonkeyByNameAsync(Name);
+
+        MonkeyRatingState.OnRatingChanged += (_, _) =>
+        {
+            _ = InvokeAsync(() => StateHasChanged());
+        };
     }
 
     private void CloseWindow()
@@ -42,7 +49,10 @@
 
     private async Task AddRating()
     {
-        await NavigationService.NavigateToRatingPageAsync();
+        // Store the monkey in the shared state.
+        MonkeyRatingState.SelectedMonkey = monkey;
+
+        await NavigationService.NavigateToRatingPageAsync(MonkeyRatingState);
     }
 
     private async Task OpenMap()

@@ -35,6 +35,7 @@ builder.Services.AddScoped<IConnectivityService, WebConnectivityService>();
 builder.Services.AddScoped<IGeolocationService, WebGeolocationService>();
 builder.Services.AddScoped<IMapService, WebMapService>();
 builder.Services.AddScoped<ThemeState>();
+builder.Services.AddScoped<MonkeyRatingState>();
 
 var app = builder.Build();
 
