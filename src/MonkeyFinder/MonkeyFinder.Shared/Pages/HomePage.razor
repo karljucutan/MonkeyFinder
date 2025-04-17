@@ -22,6 +22,12 @@ Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
     <li>Assigned Render Mode: @AssignedRenderMode</li>
 </ul>
 
+<FluentStack Orientation="Orientation.Vertical">
+    <p>Loading is lagging when it is on SSR (static side rendering).</p>
+
+    <FluentProgressRing></FluentProgressRing>
+    <FluentButton Loading="@isStatic" Appearance="Appearance.Accent">Loading</FluentButton>
+</FluentStack>
 
 @if (RendererInfo.IsWebViewRendering())
 {
@@ -39,6 +45,8 @@ else
 
 
 @code {
+    private bool isStatic = true;
+
     private string factor => FormFactor.GetFormFactor();
     private string platform => FormFactor.GetPlatform();
 
@@ -53,6 +61,13 @@ else
         // If there is an api call here, it will call twice. But, with PersistentState component, it will try to get the data from the cache if exists else it will execute the GetState(Func).
        if (RendererInfo.IsWebViewRendering())
             Monkeys = await LoadDataAsync();
+
+
+        // Check if the rendering mode is no longer static or has switched to interactive
+        if (RendererInfo.IsInteractive)
+        {
+            isStatic = false;
+        }
     }
 
     private async Task<List<Monkey>> LoadDataAsync()
