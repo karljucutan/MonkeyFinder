@@ -12,3 +12,21 @@ Note: If the browser hasn't yet cached the required WASM files (e.g., it's the u
 
 * **Title:** Blazor Hybrid: Build Cross-Platform Apps with .NET MAUI
 * **Link:** https://www.youtube.com/watch?v=Ou0k5XKcIh4
+
+
+**Web:**
+
+![image](https://github.com/user-attachments/assets/1f973f7f-1b33-4e3c-9b78-66bc776d32ad)
+
+**Android:**
+
+![image](https://github.com/user-attachments/assets/6f85799d-3ac1-44fd-ba04-2fd1b74b9d6f)
+
+**Windows:**
+
+![image](https://github.com/user-attachments/assets/e8f7f190-0e74-42b7-abec-4ae8457516eb)
+
+
+**macOS and iOS:**
+
+Haven't tried on Mac and IOS. If you happen to try the application on macOS or iOS, I would greatly appreciate it if you could share some screenshot. 😃
